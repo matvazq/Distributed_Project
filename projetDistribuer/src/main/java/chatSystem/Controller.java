@@ -13,7 +13,7 @@ import java.util.HashMap;
 public class Controller {
     private GUI gui;
     private NetworkInterface ni;
-    private HashMap users;
+    private HashMap<String, byte[]> users;
 
     public Controller() {
         this.users = new HashMap();
