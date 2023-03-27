@@ -105,6 +105,7 @@ public class GUI extends javax.swing.JFrame {
             jTextArea1.append(jTextField1.getText() + "\n");   
             
             /* send message on network */
+            controller.sendMsg(new Message(message));
             
             
         }
@@ -152,7 +153,7 @@ public class GUI extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new GUI("test").setVisible(true);
+                new GUI("test",null).setVisible(true);
             }
         });
     }
