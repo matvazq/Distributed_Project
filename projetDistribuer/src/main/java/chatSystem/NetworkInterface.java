@@ -31,7 +31,7 @@ public class NetworkInterface implements Runnable{
         myController = controller;
         sockets = new ArrayList<Socket>();
         try{
-            ipAdress = InetAddress.getByAddress("moi", new byte[] {(byte)10, (byte)8, (byte)27, (byte)136});
+            ipAdress = InetAddress.getByAddress("moi", new byte[] {(byte)10, (byte)8, (byte)32, (byte)241});
 
 
             

@@ -109,6 +109,7 @@ public class GUI extends javax.swing.JFrame {
             /* send message on network */
             Message msg = new Message(message,personne);
             controller.sendMsg(msg);
+            tfReceive.append("\n");
             //System.out.println(msg);
             Message.extractValues(msg.toString());
             
