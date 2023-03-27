@@ -20,6 +20,12 @@ public class Message implements Serializable{
         this.sender = sender;
         this.receiver = receiver;
     }
+
+    public Message(String msg) {
+        this.msg = msg;
+    }
+    
+    
     
     public String getMsg(){
         return this.msg;

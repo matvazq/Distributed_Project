@@ -11,16 +11,19 @@ import java.awt.ComponentOrientation;
  * @author matva
  */
 public class GUI extends javax.swing.JFrame {
+    Controller controller;
 
     /**
      * Creates new form GUI
      */
-    public GUI(String title) {
+    public GUI(String title,Controller controller) {
+        
         
         initComponents();
         this.setTitle(title);
         this.setVisible(true);
         jTextArea1.setLineWrap(true);
+        this.controller = controller;
     }
 
     /**
@@ -37,7 +40,7 @@ public class GUI extends javax.swing.JFrame {
         send_Btn = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea2 = new javax.swing.JTextArea();
+        tfReceive = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -54,11 +57,11 @@ public class GUI extends javax.swing.JFrame {
             }
         });
 
-        jTextArea2.setEditable(false);
-        jTextArea2.setColumns(20);
-        jTextArea2.setLineWrap(true);
-        jTextArea2.setRows(5);
-        jScrollPane2.setViewportView(jTextArea2);
+        tfReceive.setEditable(false);
+        tfReceive.setColumns(20);
+        tfReceive.setLineWrap(true);
+        tfReceive.setRows(5);
+        jScrollPane2.setViewportView(tfReceive);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -110,8 +113,9 @@ public class GUI extends javax.swing.JFrame {
 
     public void displayMsg(Message msg){
         //jTextArea1.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-        jTextArea1.append(msg + "\n");
+        tfReceive.append(msg.getMsg() + "\n");
     }
+    
     
     
     
@@ -157,8 +161,8 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextArea jTextArea2;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JButton send_Btn;
+    private javax.swing.JTextArea tfReceive;
     // End of variables declaration//GEN-END:variables
 }
