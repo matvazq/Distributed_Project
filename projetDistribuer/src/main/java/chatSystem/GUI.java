@@ -4,6 +4,8 @@
  */
 package chatSystem;
 
+import java.awt.ComponentOrientation;
+
 /**
  *
  * @author matva
@@ -18,6 +20,7 @@ public class GUI extends javax.swing.JFrame {
         initComponents();
         this.setTitle(title);
         this.setVisible(true);
+        jTextArea1.setLineWrap(true);
     }
 
     /**
@@ -31,19 +34,21 @@ public class GUI extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
-        jButton1 = new javax.swing.JButton();
+        send_Btn = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jTextArea1.setEditable(false);
         jTextArea1.setColumns(20);
+        jTextArea1.setLineWrap(true);
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
 
-        jButton1.setText("Send");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        send_Btn.setText("Send");
+        send_Btn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                send_BtnActionPerformed(evt);
             }
         });
 
@@ -55,7 +60,7 @@ public class GUI extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jTextField1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1))
+                .addComponent(send_Btn))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -63,7 +68,7 @@ public class GUI extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 268, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton1)
+                    .addComponent(send_Btn)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jTextField1)
                         .addGap(2, 2, 2))))
@@ -72,10 +77,32 @@ public class GUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void send_BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_send_BtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+        String message = jTextField1.getText();
+        message = message.trim(); //remove spaces to check if String empty
+        
+        if(!"".equals(message)){
+            //jTextArea1.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+            jTextArea1.append(jTextField1.getText() + "\n");   
+            
+            /* send message on network */
+            
+            
+        }
+        jTextField1.setText("");
+    }//GEN-LAST:event_send_BtnActionPerformed
 
+    public void displayMsg(Message msg){
+        //jTextArea1.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+        jTextArea1.append(msg + "\n");
+    }
+    
+    
+    
+    
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -112,9 +139,9 @@ public class GUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JButton send_Btn;
     // End of variables declaration//GEN-END:variables
 }
