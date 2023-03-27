@@ -4,6 +4,8 @@
  */
 package chatSystem;
 
+import java.net.InetAddress;
+
 /**
  *
  * @author matva
@@ -60,8 +62,12 @@ public class Connexion extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+try{
+            objPers = new Personne(username.getText(),InetAddress.getLocalHost().getAddress());
 
-        objPers = new Personne(username.getText(),new byte[] {(byte)10,(byte)8,(byte)32,(byte)155});
+}catch(Exception e){
+    e.printStackTrace();
+}
         
     }//GEN-LAST:event_jButton1ActionPerformed
 

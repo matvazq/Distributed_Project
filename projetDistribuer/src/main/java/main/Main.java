@@ -27,14 +27,14 @@ public class Main {
         NetworkInterface ni = new NetworkInterface(controller);
         controller.setNi(ni);
         
-                Personne objPers;
+        Personne objPers;
         while((objPers = connexion.getPersonne()) == null){
-            System.out.println("espion while");
+            System.out.println("je t'avais dis que ca marchais pas sans");
         }
         System.out.println(objPers.getUsername());
         //connexion.dispatchEvent(new WindowEvent(connexion,WindowEvent.WINDOW_CLOSING));
         connexion.setVisible(false);
-        GUI gui = new GUI(objPers.getUsername(),controller);
+        GUI gui = new GUI(objPers,controller);
         controller.setGui(gui);
 
         

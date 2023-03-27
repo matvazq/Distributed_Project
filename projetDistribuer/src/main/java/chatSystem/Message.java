@@ -5,6 +5,10 @@
 package chatSystem;
 
 import java.io.Serializable;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  *
@@ -20,6 +24,13 @@ public class Message implements Serializable{
         this.sender = sender;
         this.receiver = receiver;
     }
+
+    public Message(String msg, Personne sender) {
+        this.msg = msg;
+        this.sender = sender;
+    }
+    
+    
 
     public Message(String msg) {
         this.msg = msg;
@@ -38,6 +49,29 @@ public class Message implements Serializable{
     public Personne getReceiver() {
         return receiver;
     }
+
+    @Override
+    public String toString() {
+        return msg + "," + sender;
+    }
+    
+   
+       
+       public static Message extractValues(String input) {
+        
+        String[] parts = input.split(",");
+        String message = parts[0].trim();
+        String username = parts[1].trim();
+        byte[] ipAddressBytes = parts[2].trim().getBytes(); // assuming the IP address is in byte array format
+        
+        Message msg = new Message(message, new Personne(username, ipAddressBytes));
+
+        
+        return msg;
+    }
+
+
+    
     
     
     

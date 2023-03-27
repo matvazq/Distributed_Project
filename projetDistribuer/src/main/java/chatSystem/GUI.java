@@ -12,15 +12,17 @@ import java.awt.ComponentOrientation;
  */
 public class GUI extends javax.swing.JFrame {
     Controller controller;
+    Personne personne;
 
     /**
      * Creates new form GUI
      */
-    public GUI(String title,Controller controller) {
+    public GUI(Personne p,Controller controller) {
         
         
         initComponents();
-        this.setTitle(title);
+        this.personne = p;
+        this.setTitle(p.getUsername());
         this.setVisible(true);
         jTextArea1.setLineWrap(true);
         this.controller = controller;
@@ -105,7 +107,11 @@ public class GUI extends javax.swing.JFrame {
             jTextArea1.append(jTextField1.getText() + "\n");   
             
             /* send message on network */
-            controller.sendMsg(new Message(message));
+            Message msg = new Message(message,personne);
+            controller.sendMsg(msg);
+            //System.out.println(msg);
+            Message.extractValues(msg.toString());
+            
             
             
         }
@@ -115,6 +121,7 @@ public class GUI extends javax.swing.JFrame {
     public void displayMsg(Message msg){
         //jTextArea1.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
         tfReceive.append(msg.getMsg() + "\n");
+        jTextArea1.append("\n");
     }
     
     
@@ -153,7 +160,7 @@ public class GUI extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new GUI("test",null).setVisible(true);
+                new GUI(null,null).setVisible(true);
             }
         });
     }

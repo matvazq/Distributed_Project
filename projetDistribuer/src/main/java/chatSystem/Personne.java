@@ -4,6 +4,8 @@
  */
 package chatSystem;
 
+import java.net.InetAddress;
+
 /**
  *
  * @author matva
@@ -32,6 +34,20 @@ public class Personne {
     public void setIpAdress(byte[] ipAdress) {
         this.ipAdress = ipAdress;
     }
+
+    @Override
+    public String toString() {
+        try{
+            InetAddress ip = InetAddress.getByAddress(this.ipAdress);
+            
+           System.out.println(ip.getHostAddress());
+           return username + "," + ip.getHostAddress();
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return "erreur";
+            }
     
     
     
