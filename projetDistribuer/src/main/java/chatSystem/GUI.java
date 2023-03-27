@@ -5,6 +5,8 @@
 package chatSystem;
 
 import java.awt.ComponentOrientation;
+import javax.swing.DefaultListModel;
+import javax.swing.JList;
 
 /**
  *
@@ -13,6 +15,7 @@ import java.awt.ComponentOrientation;
 public class GUI extends javax.swing.JFrame {
     Controller controller;
     Personne personne;
+    DefaultListModel demoList;
 
     /**
      * Creates new form GUI
@@ -20,10 +23,13 @@ public class GUI extends javax.swing.JFrame {
     public GUI(Personne p,Controller controller) {
         this.personne = p;
         this.controller = controller;
+        demoList = new DefaultListModel();
         initComponents();
         this.setTitle(p.getUsername());
         this.setVisible(true);
         jTextArea1.setLineWrap(true);
+
+        
     }
 
     /**
@@ -35,12 +41,41 @@ public class GUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jList1 = new javax.swing.JList<>();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jList2 = new javax.swing.JList<>();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        jList3 = new javax.swing.JList<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         send_Btn = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         tfReceive = new javax.swing.JTextArea();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        userList = new javax.swing.JList<>();
+
+        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane3.setViewportView(jList1);
+
+        jList2.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane4.setViewportView(jList2);
+
+        jList3.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane5.setViewportView(jList3);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -63,6 +98,13 @@ public class GUI extends javax.swing.JFrame {
         tfReceive.setRows(5);
         jScrollPane2.setViewportView(tfReceive);
 
+        userList.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane6.setViewportView(userList);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -75,16 +117,24 @@ public class GUI extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(59, 59, 59)
+                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(send_Btn)
                     .addGroup(layout.createSequentialGroup()
@@ -108,7 +158,7 @@ public class GUI extends javax.swing.JFrame {
             controller.sendMsg(msg);
             tfReceive.append("\n");
             System.out.println("Message: " + msg);
-            Message.extractValues(msg.toString());
+            //Message.extractValues(msg.toString());
             
             
             
@@ -158,13 +208,33 @@ public class GUI extends javax.swing.JFrame {
             }
         });
     }
+    
+    /* Add known users to the list */  
+    public void addListElement(String username){
+        demoList.addElement(username);
+        userList.setModel(demoList);
+    }
+    
+    /* Remove disconnecting users */
+    public void removeListElement(String username){
+        demoList.removeElement(username);
+        userList.setModel(demoList);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JList<String> jList1;
+    private javax.swing.JList<String> jList2;
+    private javax.swing.JList<String> jList3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JButton send_Btn;
     private javax.swing.JTextArea tfReceive;
+    private javax.swing.JList<String> userList;
     // End of variables declaration//GEN-END:variables
 }

@@ -14,6 +14,11 @@ public class Controller {
     private GUI gui;
     private NetworkInterface ni;
     private HashMap users;
+
+    public Controller() {
+        this.users = new HashMap();
+    }
+    
  
     
     public void messageReceived(Message msg){
@@ -23,6 +28,7 @@ public class Controller {
         /* if the user doesn't exist yet, add it to the users map */
         if(!users.containsKey(userName)){
             users.put(userName, userIp);
+            gui.addListElement(userName);
         }
         
         gui.displayMsg(userName + ": " + msg.getMsg()); //Display Username: message
