@@ -4,6 +4,8 @@
  */
 package chatSystem;
 
+import java.util.HashMap;
+
 /**
  *
  * @author dylan
@@ -11,14 +13,22 @@ package chatSystem;
 public class Controller {
     private GUI gui;
     private NetworkInterface ni;
+    private HashMap users;
  
     
-    public void displayMsg(Message msg){
-        gui.displayMsg(msg);
+    public void messageReceived(Message msg){
+        String userName = msg.getSender().getUsername();
+        byte[] userIp = msg.getSender().getIpAdress();
+
+        /* if the user doesn't exist yet, add it to the users map */
+        if(!users.containsKey(userName)){
+            users.put(userName, userIp);
+        }
+        
+        gui.displayMsg(userName + ": " + msg.getMsg()); //Display Username: message
     }
     
     public void sendMsg(Message msg) {
-        
         try{
             ni.send(msg);
         }catch(Exception e){
@@ -27,6 +37,8 @@ public class Controller {
         
     }
 
+    
+    /* SETTER ; GETTER */
     public GUI getGui() {
         return gui;
     }

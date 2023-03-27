@@ -24,13 +24,14 @@ public class UDPListener implements Runnable {
 
     @Override
     public void run() {
-       
+        Message msg;
         try{
-            Message strCurrentLine;
+            String strCurrentLine;
             while (true) {
-                strCurrentLine = new Message(this.reader.readLine());
-                System.out.println(strCurrentLine);
-                controller.displayMsg(strCurrentLine);
+                strCurrentLine = this.reader.readLine();
+                msg = Message.extractValues(strCurrentLine);
+                System.out.println("received:" + strCurrentLine);
+                controller.messageReceived(msg);
             }
         }catch(Exception e){
             e.printStackTrace();

@@ -38,16 +38,15 @@ public class Personne {
     @Override
     public String toString() {
         try{
-            InetAddress ip = InetAddress.getByAddress(this.ipAdress);
-            
-           System.out.println(ip.getHostAddress());
-           return username + "," + ip.getHostAddress();
+            InetAddress ip = InetAddress.getByAddress(this.ipAdress); //format: 192.168.0.1
 
+            //System.out.println("Personne ipAdress: " + ip.getHostAddress());
+            return username + "," + ip.getHostAddress();
         }catch(Exception e){
             e.printStackTrace();
         }
         return "erreur";
-            }
+    }
     
     
     

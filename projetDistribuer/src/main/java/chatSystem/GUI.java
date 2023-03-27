@@ -18,14 +18,12 @@ public class GUI extends javax.swing.JFrame {
      * Creates new form GUI
      */
     public GUI(Personne p,Controller controller) {
-        
-        
-        initComponents();
         this.personne = p;
+        this.controller = controller;
+        initComponents();
         this.setTitle(p.getUsername());
         this.setVisible(true);
         jTextArea1.setLineWrap(true);
-        this.controller = controller;
     }
 
     /**
@@ -98,7 +96,6 @@ public class GUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void send_BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_send_BtnActionPerformed
-        // TODO add your handling code here:
         String message = jTextField1.getText();
         message = message.trim(); //remove spaces to check if String empty
         
@@ -110,7 +107,7 @@ public class GUI extends javax.swing.JFrame {
             Message msg = new Message(message,personne);
             controller.sendMsg(msg);
             tfReceive.append("\n");
-            //System.out.println(msg);
+            System.out.println("Message: " + msg);
             Message.extractValues(msg.toString());
             
             
@@ -119,15 +116,11 @@ public class GUI extends javax.swing.JFrame {
         jTextField1.setText("");
     }//GEN-LAST:event_send_BtnActionPerformed
 
-    public void displayMsg(Message msg){
+    public void displayMsg(String msg){
         //jTextArea1.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-        tfReceive.append(msg.getMsg() + "\n");
+        tfReceive.append(msg + "\n");
         jTextArea1.append("\n");
     }
-    
-    
-    
-    
     
     
     

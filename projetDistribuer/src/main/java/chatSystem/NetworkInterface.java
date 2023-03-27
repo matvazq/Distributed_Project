@@ -31,11 +31,9 @@ public class NetworkInterface implements Runnable{
         myController = controller;
         sockets = new ArrayList<Socket>();
         try{
-            ipAdress = InetAddress.getByAddress("moi", new byte[] {(byte)10, (byte)8, (byte)32, (byte)241});
+            ipAdress = InetAddress.getByAddress("moi", new byte[] {(byte)192, (byte)168, (byte)0, (byte)255});
 
 
-            
-            //socket for window A
             DatagramSocket sender1 = new DatagramSocket();
             DatagramSocket receiver1 = new DatagramSocket(10000);//listen on port 10 000
             
@@ -45,25 +43,17 @@ public class NetworkInterface implements Runnable{
             Thread t = new Thread(new UDPListener(this.myController,reader));
             t.start();
             
-            
+     
         }catch(Exception e){
             e.printStackTrace();
         }
     }
     
-    public int socketExist(InetAddress ipAdress){
-        for(Socket s : sockets){
-            if(s.getInetAddress() == ipAdress){
-                return sockets.indexOf(s);
-            }
-        }
-        return -1;
-    }
-    
+
     public void send(Message msg) throws Exception{
         DatagramSocket sender = new DatagramSocket();
         BufferedWriter writer = new BufferedWriter(new UDPWriter(sender,ipAdress,10000));
-        writer.write(msg.getMsg());
+        writer.write(msg.toString());
         
         writer.newLine();
         writer.flush();
@@ -71,8 +61,34 @@ public class NetworkInterface implements Runnable{
     
     public void broadcast(){
                 
-
     }
+      public int socketExist(InetAddress ipAdress){
+        for(Socket s : sockets){
+            if(s.getInetAddress() == ipAdress){
+                return sockets.indexOf(s);
+            }
+        }
+        return -1;
+    }  
+    
+    /* get the ip of  the computer */
+    public String getIp(){
+        try{
+            //get an array of all ip address
+            String hostName = InetAddress.getLocalHost().getHostName();
+            //System.out.println("hostname: " + hostName);
+            InetAddress[] ip = InetAddress.getAllByName(hostName);
+            for(InetAddress i: ip){
+                System.out.println(i.getHostAddress());
+            }
+            return "";
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return "";
+    }
+    
+    
     @Override
     public void run() {
         //listen to incoming tcp connection
