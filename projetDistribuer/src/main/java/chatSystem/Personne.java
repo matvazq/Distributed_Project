@@ -5,6 +5,8 @@
 package chatSystem;
 
 import java.net.InetAddress;
+import java.util.Arrays;
+import java.util.Objects;
 
 /**
  *
@@ -46,6 +48,24 @@ public class Personne {
             e.printStackTrace();
         }
         return "erreur";
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Personne other = (Personne) obj;
+        if (!Objects.equals(this.username, other.username)) {
+            return false;
+        }
+        return Arrays.equals(this.ipAdress, other.ipAdress);
     }
     
     

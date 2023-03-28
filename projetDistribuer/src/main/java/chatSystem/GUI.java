@@ -28,6 +28,7 @@ public class GUI extends javax.swing.JFrame {
         this.setTitle(p.getUsername());
         this.setVisible(true);
         jTextArea1.setLineWrap(true);   
+        jTextArea1.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
     }
 
     /**
@@ -96,11 +97,6 @@ public class GUI extends javax.swing.JFrame {
         tfReceive.setRows(5);
         jScrollPane2.setViewportView(tfReceive);
 
-        userList.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         jScrollPane6.setViewportView(userList);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -117,22 +113,18 @@ public class GUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(2, 2, 2))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(59, 59, 59)
-                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(send_Btn)
                     .addGroup(layout.createSequentialGroup()
@@ -148,18 +140,13 @@ public class GUI extends javax.swing.JFrame {
         message = message.trim(); //remove spaces to check if String empty
         
         if(!"".equals(message)){
-            jTextArea1.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
             jTextArea1.append(jTextField1.getText() + "\n");   
             
             /* send message on network */
-            Message msg = new Message(message,personne);
+            Message msg = new Message(message,personne, false);
             controller.sendMsg(msg);
             tfReceive.append("\n");
             System.out.println("Message: " + msg);
-            //Message.extractValues(msg.toString());
-            
-            
-            
         }
         jTextField1.setText("");
     }//GEN-LAST:event_send_BtnActionPerformed
@@ -170,6 +157,9 @@ public class GUI extends javax.swing.JFrame {
         jTextArea1.append("\n");
     }
     
+    public void displayOwnMsg(String msg){
+        jTextArea1.append(msg + "\n");
+    }
     
     
     /**

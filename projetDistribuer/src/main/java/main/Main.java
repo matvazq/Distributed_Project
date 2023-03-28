@@ -39,6 +39,7 @@ public class Main {
         connexion.setVisible(false);
         GUI gui = new GUI(objPers,controller);
         controller.setGui(gui);
+        controller.connection();
 
         
         

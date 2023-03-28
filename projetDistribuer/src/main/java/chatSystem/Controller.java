@@ -27,7 +27,8 @@ public class Controller {
         byte[] userIp = msg.getSender().getIpAdress();
 
         /* Don't display local user's message */
-        if(msg.getSender() == localUser){
+        if(localUser.equals(msg.getSender())){
+            System.out.println("same user");
             return;
         }
         
@@ -38,6 +39,11 @@ public class Controller {
         }
         
         gui.displayMsg(userName + ": " + msg.getMsg()); //Display Username: message
+        
+        if(msg.getReply()){
+            Message replyMsg = new Message("hello", this.localUser, false);
+            this.sendMsg(replyMsg);
+        }
     }
     
     public void sendMsg(Message msg) {
@@ -47,6 +53,13 @@ public class Controller {
             e.printStackTrace();
         }
         
+    }
+    
+    
+    public void connection(){
+        Message connectionMessage = new Message("Hello ", this.localUser, true);
+        gui.displayOwnMsg(connectionMessage.getMsg());
+        this.sendMsg(connectionMessage);
     }
 
     

@@ -5,10 +5,7 @@
 package chatSystem;
 
 import java.io.Serializable;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
 
 /**
  *
@@ -18,6 +15,7 @@ public class Message implements Serializable{
     private String msg;
     private Personne sender;
     private Personne receiver;
+    private boolean reply;
 
     
     public Message(String msg, Personne sender, Personne receiver) {
@@ -26,9 +24,10 @@ public class Message implements Serializable{
         this.receiver = receiver;
     }
 
-    public Message(String msg, Personne sender) {
+    public Message(String msg, Personne sender, Boolean reply) {
         this.msg = msg;
         this.sender = sender;
+        this.reply = reply;
     }
     
     public Message(String msg) {
@@ -49,10 +48,17 @@ public class Message implements Serializable{
         return receiver;
     }
 
+    public boolean getReply() {
+        return reply;
+    }
+    
+    
+
     @Override
     public String toString() {
-        return msg + "," + sender;
+        return msg + "," + sender + "," + reply;
     }
+    
     
    
        
@@ -62,12 +68,14 @@ public class Message implements Serializable{
         String message = parts[0].trim();
         String username = parts[1].trim();
         String ipAddressString = parts[2].trim(); //format 192.168.0.1
+        Boolean reply = Boolean.parseBoolean(parts[3].trim());
 
         /* Display extracted values */
         System.out.println("Extracting values... ");
         System.out.println("    message: " + message);
         System.out.println("    username: " + username);
         System.out.println("    ipAdress: " + ipAddressString);
+        System.out.println("    reply: " + reply + "\n");
 
         /* Split ipAddressString into 4 int */
         String[] ipTabString = ipAddressString.split("\\.");
@@ -78,7 +86,7 @@ public class Message implements Serializable{
         
         /* Build Byte array from previous ip parts*/
         byte[] ipAddressBytes = {(byte)ipTab[0], (byte)ipTab[1], (byte)ipTab[2], (byte)ipTab[3] };
-        Message msg = new Message(message, new Personne(username, ipAddressBytes));
+        Message msg = new Message(message, new Personne(username, ipAddressBytes), reply);
         
         return msg;
     }
