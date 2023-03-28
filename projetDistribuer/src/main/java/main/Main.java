@@ -21,15 +21,15 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        /* Open the connection window */
         Connexion connexion = new Connexion();
         
-        /* ChatSystem Component */
+        /* Create chatSystem Component */
         Controller controller = new Controller();
         NetworkInterface ni = new NetworkInterface(controller);
         controller.setNi(ni);
         
-        /* Ask username */
+        /* Wait for user to enter his username */
         Personne objPers;
         while((objPers = connexion.getPersonne()) == null){
             System.out.println("je t'avais dis que ca marchais pas sans");
@@ -37,12 +37,11 @@ public class Main {
         System.out.println(objPers.getUsername());
 
         connexion.setVisible(false);
+        
+        /* Display main window */
         GUI gui = new GUI(objPers,controller);
         controller.setGui(gui);
         controller.connection();
-
-        
-        
 
         return;
     }

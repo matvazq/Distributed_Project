@@ -5,8 +5,8 @@
 package chatSystem;
 
 import java.awt.ComponentOrientation;
+import java.util.ArrayList;
 import javax.swing.DefaultListModel;
-import javax.swing.JList;
 
 /**
  *
@@ -19,6 +19,8 @@ public class GUI extends javax.swing.JFrame {
 
     /**
      * Creates new form GUI
+     * @param p
+     * @param controller
      */
     public GUI(Personne p,Controller controller) {
         this.personne = p;
@@ -141,10 +143,18 @@ public class GUI extends javax.swing.JFrame {
         
         if(!"".equals(message)){
             jTextArea1.append(jTextField1.getText() + "\n");   
+            Message msg = new Message(message,personne, false);
+            
+            /* Get wich user to send the message to */
+            ArrayList<String> userSelected = new ArrayList<>(userList.getSelectedValuesList());          
             
             /* send message on network */
-            Message msg = new Message(message,personne, false);
-            controller.sendMsg(msg);
+            if(userSelected.isEmpty()){
+                controller.sendMsg(msg);
+            }else{
+                controller.sendMsg(msg, userSelected); //may not work if host have more than one IP
+            }
+            
             tfReceive.append("\n");
             System.out.println("Message: " + msg);
         }
@@ -191,6 +201,7 @@ public class GUI extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new GUI(null,null).setVisible(true);
             }
@@ -213,6 +224,7 @@ public class GUI extends javax.swing.JFrame {
         return this.personne;
     }
 
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList<String> jList1;
     private javax.swing.JList<String> jList2;

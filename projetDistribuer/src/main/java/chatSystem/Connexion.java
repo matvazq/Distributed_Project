@@ -5,6 +5,7 @@
 package chatSystem;
 
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 /**
  *
@@ -64,7 +65,7 @@ public class Connexion extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try{
             objPers = new Personne(username.getText(),InetAddress.getLocalHost().getAddress());
-        }catch(Exception e){
+        }catch(UnknownHostException e){
             e.printStackTrace();
         }
     }//GEN-LAST:event_jButton1ActionPerformed

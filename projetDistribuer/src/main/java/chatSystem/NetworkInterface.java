@@ -9,12 +9,9 @@ import UDP.UDPReader;
 import UDP.UDPWriter;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.Writer;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.InterfaceAddress;
-import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -33,7 +30,8 @@ public class NetworkInterface implements Runnable{
         myController = controller;
         sockets = new ArrayList<Socket>();
         try{
-            ipAdress = InetAddress.getByAddress("moi", new byte[] {(byte)10, (byte)8, (byte)23, (byte)255});
+            /* broadcast address harde coded for now */
+            ipAdress = InetAddress.getByAddress("moi", new byte[] {(byte)192, (byte)168, (byte)0, (byte)255});
 
 
             DatagramSocket sender1 = new DatagramSocket();
@@ -42,19 +40,32 @@ public class NetworkInterface implements Runnable{
             BufferedReader reader = new BufferedReader(new UDPReader(receiver1));
             BufferedWriter writer = new BufferedWriter(new UDPWriter(sender1, ipAdress, 20000));//write on port 20 000
             
+            
+            /* Create UDPListener for incoming message using UDP */
             Thread t = new Thread(new UDPListener(this.myController,reader));
             t.start();
-            
-     
         }catch(Exception e){
             e.printStackTrace();
         }
     }
     
 
+    /* Send message to the broadcast address */
     public void send(Message msg) throws Exception{
         DatagramSocket sender = new DatagramSocket();
         BufferedWriter writer = new BufferedWriter(new UDPWriter(sender,ipAdress,10000));
+        writer.write(msg.toString());
+        
+        writer.newLine();
+        writer.flush();
+        System.out.println("send with broadcast");
+    }
+    
+    /* Send to the specified address */
+    public void send(Message msg, byte[] address) throws Exception{
+        InetAddress ip = InetAddress.getByAddress(address);
+        DatagramSocket sender = new DatagramSocket();
+        BufferedWriter writer = new BufferedWriter(new UDPWriter(sender,ip,10000));
         writer.write(msg.toString());
         
         writer.newLine();
@@ -64,7 +75,8 @@ public class NetworkInterface implements Runnable{
     public void broadcast(){
                 
     }
-      public int socketExist(InetAddress ipAdress){
+    
+    public int socketExist(InetAddress ipAdress){
         for(Socket s : sockets){
             if(s.getInetAddress() == ipAdress){
                 return sockets.indexOf(s);
