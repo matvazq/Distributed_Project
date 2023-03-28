@@ -27,9 +27,7 @@ public class GUI extends javax.swing.JFrame {
         initComponents();
         this.setTitle(p.getUsername());
         this.setVisible(true);
-        jTextArea1.setLineWrap(true);
-
-        
+        jTextArea1.setLineWrap(true);   
     }
 
     /**
@@ -219,6 +217,10 @@ public class GUI extends javax.swing.JFrame {
     public void removeListElement(String username){
         demoList.removeElement(username);
         userList.setModel(demoList);
+    }
+    
+    public Personne getPersonne(){
+        return this.personne;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

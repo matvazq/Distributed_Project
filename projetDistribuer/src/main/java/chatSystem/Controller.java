@@ -14,6 +14,7 @@ public class Controller {
     private GUI gui;
     private NetworkInterface ni;
     private HashMap<String, byte[]> users;
+    private Personne localUser;
 
     public Controller() {
         this.users = new HashMap();
@@ -25,6 +26,11 @@ public class Controller {
         String userName = msg.getSender().getUsername();
         byte[] userIp = msg.getSender().getIpAdress();
 
+        /* Don't display local user's message */
+        if(msg.getSender() == localUser){
+            return;
+        }
+        
         /* if the user doesn't exist yet, add it to the users map */
         if(!users.containsKey(userName)){
             users.put(userName, userIp);
@@ -51,6 +57,7 @@ public class Controller {
 
     public void setGui(GUI gui) {
         this.gui = gui;
+        this.localUser = gui.getPersonne();
     }
 
     public NetworkInterface getNi() {

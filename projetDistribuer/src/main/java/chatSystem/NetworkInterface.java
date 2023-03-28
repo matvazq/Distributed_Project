@@ -13,9 +13,11 @@ import java.io.IOException;
 import java.io.Writer;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.net.InterfaceAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Enumeration;
 
 /**
  *
@@ -31,7 +33,7 @@ public class NetworkInterface implements Runnable{
         myController = controller;
         sockets = new ArrayList<Socket>();
         try{
-            ipAdress = InetAddress.getByAddress("moi", new byte[] {(byte)192, (byte)168, (byte)0, (byte)255});
+            ipAdress = InetAddress.getByAddress("moi", new byte[] {(byte)10, (byte)8, (byte)23, (byte)255});
 
 
             DatagramSocket sender1 = new DatagramSocket();
@@ -86,6 +88,37 @@ public class NetworkInterface implements Runnable{
             e.printStackTrace();
         }
         return "";
+    }
+    
+    /* WIP */
+    public InetAddress getBroadcastAddress(InetAddress ipAdress){
+        try{
+            /* get all network interfaces */
+            Enumeration<java.net.NetworkInterface> interfaces = java.net.NetworkInterface.getNetworkInterfaces();
+            while (interfaces.hasMoreElements()) 
+            {
+                java.net.NetworkInterface networkInterface = interfaces.nextElement();
+                if (networkInterface.isLoopback())
+                    continue;    // check if it's the loopback address
+                for (InterfaceAddress interfaceAddress : networkInterface.getInterfaceAddresses()) 
+                {
+                    InetAddress broadcast = interfaceAddress.getBroadcast();
+                    if (broadcast == null)
+                        continue;
+                    System.out.println("broadcast : " + broadcast);
+                    if(false){//check if it's the broadcast address of the local address
+                        //subnet mask
+                        
+                        
+                        return broadcast;
+                    }
+                }
+            }
+            return null;
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return null;
     }
     
     
